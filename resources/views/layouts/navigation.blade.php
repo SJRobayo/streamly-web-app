@@ -14,7 +14,15 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <span class="font-bold text-lg text-red-500"  style="font-family: 'Courier New', Courier, monospace;">{{ __('Home') }}</span>
+                        <span class="font-bold text-lg text-red-500"
+                            style="font-family: 'Courier New', Courier, monospace;">{{ __('Home') }}</span>
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <span class="font-bold text-lg text-red-500"
+                            style="font-family: 'Courier New', Courier, monospace;">{{ __('Serendipity') }}</span>
                     </x-nav-link>
                 </div>
             </div>
@@ -25,7 +33,8 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ session('user_data')['name'] ?? 'bombo' }}
+                            </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -84,8 +93,12 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-800 dark:text-gray-200">
+                    {{ session('user_data')['name'] ?? 'bombo' }}
+
+                </div>
+                <div class="font-medium text-sm text-gray-500">{{ session('user_data')['name'] ?? 'bombo' }}
+                </div>
             </div>
 
             <div class="mt-3 space-y-1">

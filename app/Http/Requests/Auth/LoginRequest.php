@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Services\ApiService;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -37,19 +38,33 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+    public function authenticate()
     {
-        $this->ensureIsNotRateLimited();
+        //USE THIS FUNCTION TO AUTHENTICATE THROUGH THE API SERVICE
+        // dd(1);
+        // $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        // if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        //     RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+        //     throw ValidationException::withMessages([
+        //         'email' => trans('auth.failed'),
+        //     ]);
+        // }
+
+        // RateLimiter::clear($this->throttleKey());
+
+        $service = new ApiService();
+        $response = $service->login($this->input('email'), $this->input('password'));
+
+        if (isset($response['access_token'])) {
+
+            $userData = $service->retrieveUserData($response['access_token']);
+            // dd($userData);
+            session(['access_token' => $response['access_token']]);
+            session(['user_data' => $userData]);
+            return redirect()->intended('/dashboard');
         }
-
-        RateLimiter::clear($this->throttleKey());
     }
 
     /**
@@ -80,6 +95,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }
