@@ -5,11 +5,10 @@ namespace App\Livewire;
 use App\Services\ApiService;
 use Livewire\Component;
 
-class Home extends Component
+class SerendipityPage extends Component
 {
 
-    public $iterator = 10;
-    public $apiService;
+    public $data;
     public $genres =  [
         "Adventure",
         "Fantasy",
@@ -31,26 +30,17 @@ class Home extends Component
         "War",
         "TV Movie"
     ];
-
-    public $movies = [];
-    public $data;
-    public $selectedGenre;
-
-    public function mount() {}
+    public function mount()
+    {
+        $token = session('access_token');
+        $userId = session('user_data')['id'];
+   
+        $apiService = new ApiService();
+        $this->data = $apiService->getSerendipityData($token, $userId);
+        // dd($this->data);
+    }
     public function render()
     {
-
-        $apiService = new ApiService();
-        $this->data = $apiService->getDataFromExternalApi($this->selectedGenre ?? 'Drama');
-        // dd($this->data);
-        return view('livewire.home', [
-            'movies' => $this->data
-        ]);
-    }
-
-    public function cleanFilters()
-    {
-        $this->selectedGenre = null;
-        // $this->data = [];
+        return view('livewire.serendipity-page', ["data" => $this->data]);
     }
 }
