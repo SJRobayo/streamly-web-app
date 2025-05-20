@@ -1,4 +1,4 @@
-<h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Recommendations for you</h2>
+<h2 class="text-2xl font-bold mb-6 mt-6 text-gray-900 dark:text-white">Recommendations for you</h2>
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     @foreach ($topTenMovies as $movie)
         <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden flex flex-col h-[440px]">

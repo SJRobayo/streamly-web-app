@@ -67,6 +67,7 @@ class Home extends Component
             $this->searchResults = $apiService->searchMovie($this->query, $this->sessionToken);
             // dd($searchResults);
         } else {
+            $this->data = $apiService->getSerendipityData($this->sessionToken, $this->sessionId);
             $this->topTenMovies = $apiService->getTopTenMovies($this->sessionId, $this->sessionToken);
             $this->favouriteGenreMovies1 = $apiService->getDataFromExternalApi($this->favouriteGenre1);
             $this->favouriteGenreMovies2 = $apiService->getDataFromExternalApi($this->favouriteGenre2);

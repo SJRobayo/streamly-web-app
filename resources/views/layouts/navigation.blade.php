@@ -19,12 +19,12 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('movie.serendipity')" :active="request()->routeIs('movie.serendipity')">
                         <span class="font-bold text-lg text-red-500"
                             style="font-family: 'Courier New', Courier, monospace;">{{ __('Serendipity') }}</span>
                     </x-nav-link>
-                </div>
+                </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('movie.roulette')" :active="request()->routeIs('movie.roulette')">
                         <span class="font-bold text-lg text-red-500"
