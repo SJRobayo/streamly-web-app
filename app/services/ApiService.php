@@ -143,7 +143,7 @@ class ApiService
         return [];
     }
 
-    public function getTopTenMovies($id, $token)
+    public function getUserRecomendations($id, $token)
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
@@ -155,6 +155,22 @@ class ApiService
         );
         if ($response->successful()) {
             return $response['recommendations'];
+        }
+
+        return [];
+    }
+
+    public function getTopTenMovies($token)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+
+        ])->get(
+            'http://localhost:8000/api/top-movies'
+        );
+        // dd($response);
+        if ($response->successful()) {
+            return $response->json();
         }
 
         return [];
