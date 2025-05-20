@@ -74,7 +74,7 @@ class ApiService
             'Content-Type' => 'application/json'
         ])->post(
             'http://localhost:8000/worstrecommendations/user/' . $user_id,
-            ['n_recommendations' => 5] // <-- Aquí defines cuántas recomendaciones deseas
+            ['n_recommendations' => 10] // <-- Aquí defines cuántas recomendaciones deseas
         );
 
         if ($response->successful()) {
@@ -110,5 +110,53 @@ class ApiService
             'message' => 'Error al comunicarse con el chatbot.',
             'status' => $response->status()
         ];
+    }
+
+    public function getMovieDetails($id)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0YW1teWdhcmRuZXI5NDdAZXhhbXBsZS5jb20iLCJleHAiOjE3NDkyMDY4MDV9.tspKQD3vFoHSjNUNv06uYII5OGPR-F5N5cDS-7NkSCE'
+        ])->get('http://localhost:8000/api/movies/' . $id);
+
+        if ($response->successful()) {
+            return $response->json(); // o ->body() si prefieres el texto sin parsear
+        }
+
+        // Manejo de errores
+        return [
+            'error' => true,
+            'message' => 'Error al conectar con la API externa',
+            'status' => $response->status()
+        ];
+    }
+
+    public function searchMovie($query, $token)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->post('http://localhost:8000/api/movies/search/' . $query);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return [];
+    }
+
+    public function getTopTenMovies($id, $token)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])->post(
+            'http://localhost:8000/recommendations/user/' . $id,
+            ['n_recommendations' => 10]
+        );
+        if ($response->successful()) {
+            return $response['recommendations'];
+        }
+
+        return [];
     }
 }

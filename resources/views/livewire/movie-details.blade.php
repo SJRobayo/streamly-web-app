@@ -3,16 +3,22 @@
 
         <div class="container">
 
-            <a href="#"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_cover.jpg"
-                    alt="cover" class="cover" /></a>
+            <a href="#">
+                <img 
+                    src="https://image.tmdb.org/t/p/w500{{ $movie['poster_path'] }}"
+                    alt="cover" 
+                    class="cover"
+                    style="width:220px; height:auto; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.3);"
+                />
+            </a>
 
             <div class="hero">
 
                 <div class="details">
 
-                    <div class="title1">The Hobbit <span>PG-13</span></div>
+                    <div class="title1">{{$movie['title']}} </div>
 
-                    <div class="title2">The Battle of the Five Armies</div>
+                    <div class="title2">{{$movie['tagline']}}</div>
 
                     <fieldset class="rating">
                         <input type="radio" id="star5" name="rating" value="5" /><label class = "full"
@@ -37,7 +43,7 @@
                             for="starhalf" title="Sucks big time - 0.5 stars"></label>
                     </fieldset>
 
-                    <span class="likes">109 likes</span>
+                    <span class="likes">{{$movie['vote_count']}} votes</span>
 
                 </div> <!-- end details -->
 
@@ -53,12 +59,7 @@
 
                 <div class="column2">
 
-                    <p>Bilbo Baggins is swept into a quest to reclaim the lost Dwarf Kingdom of Erebor from the fearsome
-                        dragon Smaug. Approached out of the blue by the wizard Gandalf the Grey, Bilbo finds himself
-                        joining
-                        a company of thirteen dwarves led by the legendary warrior, Thorin Oakenshield. Their journey
-                        will
-                        take them into the Wild; through... <a href="#">read more</a></p>
+                    <p>{{$movie['overview']}} </p>
 
 
                 </div> <!-- end column2 -->
@@ -129,16 +130,14 @@
             overflow: hidden;
             top: 0;
             left: 0;
-            background: red;
-            background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/hobbit_bg.jpg");
+            background: url("https://image.tmdb.org/t/p/w500{{ $movie['backdrop_path'] }}") center center / cover no-repeat;
             z-index: -1;
 
             transform: skewY(-2.2deg);
             transform-origin: 0 0;
 
-            //chrome antialias fix
+            /* chrome antialias fix */
             -webkit-backface-visibility: hidden;
-
         }
 
         .cover {
@@ -173,7 +172,8 @@
             }
 
             .title2 {
-                color: #C7C1BA;
+                color: #fff;
+                text-shadow: 0 5px 8px rgba(0,0,0,0.5);
                 font-size: 23px;
                 font-weight: 300;
                 margin-bottom: 15px;

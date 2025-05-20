@@ -13,14 +13,17 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
+
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -33,7 +36,7 @@
         @endisset
 
         <!-- Page Content -->
-        <main>
+        <main class="flex-grow">
             {{ $slot }}
         </main>
         @include('components.layouts.footer')
@@ -71,6 +74,7 @@
         </button>
     </div>
 
+    
     <!-- Chat Scripts -->
     <script>
         const ACCESS_TOKEN = "{{ session('access_token') }}";
@@ -154,7 +158,10 @@
         document.getElementById('chat-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') sendMessage();
         });
+
+        
     </script>
+    
 </body>
 
 </html>

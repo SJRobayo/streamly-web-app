@@ -63,6 +63,7 @@ class LoginRequest extends FormRequest
             // dd($userData);
             session(['access_token' => $response['access_token']]);
             session(['user_data' => $userData]);
+            
             return redirect()->intended('/dashboard');
         }
     }
